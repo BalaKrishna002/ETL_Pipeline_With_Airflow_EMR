@@ -1,0 +1,38 @@
+{
+  "paths": {
+    "bronze": "s3://dataengineering-project-dataset-datalake/E_Commerce_Orders_Data/bronze",
+    "silver": "s3://dataengineering-project-dataset-datalake/E_Commerce_Orders_Data/silver",
+    "gold": "s3://dataengineering-project-dataset-datalake/E_Commerce_Orders_Data/gold",
+    "scripts_bucket": "s3://emr-test-mbk/jobs/E_Commerce_Orders_Data_Projects"
+  },
+  "emr_config": {
+    "Name": "e-commerce_order-emr-cluster",
+    "ReleaseLabel": "emr-6.15.0",
+    "Applications": [{"Name": "Spark"}],
+    "Instances": {
+      "Ec2KeyName": "emr-test-cluster",
+      "InstanceGroups": [
+        {
+          "Name": "Master",
+          "Market": "ON_DEMAND",
+          "InstanceRole": "MASTER",
+          "InstanceType": "m6g.xlarge",
+          "InstanceCount": 1
+        },
+        {
+          "Name": "Core",
+          "Market": "SPOT",
+          "InstanceRole": "CORE",
+          "InstanceType": "m6g.xlarge",
+          "InstanceCount": 1
+        }
+      ],
+      "KeepJobFlowAliveWhenNoSteps": true,
+      "TerminationProtected": false,
+      "Ec2SubnetId": "subnet-0463ab466d5e7062e"
+    },
+    "LogUri": "s3://emr-test-mbk/logs/",
+    "JobFlowRole": "EMR_EC2_DefaultRole",
+    "ServiceRole": "EMR_DefaultRole"
+  }
+}
